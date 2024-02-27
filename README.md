@@ -1,9 +1,4 @@
-<h1>
-    <img width='40px' src='https://hermes.digitalinnovation.one/assets/diome/logo-minimized.png"'>
-    
-<h1>  
-    <img width='40px' src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.cleanpng.com%2Ffree%2Fjava-logo.html&psig=AOvVaw2jNqeiWxxvjYWD2C0cH_Iu&ust=1709134546781000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNCu2r3sy4QDFQAAAAAdAAAAABAF"'>
-</h1>
+
 
 API desenvolvida para o bootcamp JAVA AI Powered 
 
@@ -48,8 +43,8 @@ classDiagram
         -String description
     }
 
-    Person --> Account
-    Person --> Feature
-    Person --> Card
-    Person --> News
+    Person "1" *--> "1" Account
+    Person "1" *--> "N" Feature
+    Person "1" *--> "1" Card
+    Person "1" *--> "N" News
 ```
