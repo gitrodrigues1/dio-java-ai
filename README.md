@@ -15,10 +15,10 @@ classDiagram
     class Person {
         <<Data>>
         -String name
-        -Account account
-        -List<Feature> features
-        -List<Card> card
-        -List<News> news
+        -Account[] account
+        -Feature[] features
+        -Card card
+        -News[] news
     }
     class Account {
         <<Data>>
