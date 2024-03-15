@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
 import me.dio.diojavaai.model.Person;
 import me.dio.diojavaai.service.IPersonService;
 
@@ -28,7 +29,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public ResponseEntity<Person> createPerson(@RequestBody Person person) {
+    public ResponseEntity<Person> createPerson(@Valid @RequestBody Person person) {
         var createdPerson = personService.create(person);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
