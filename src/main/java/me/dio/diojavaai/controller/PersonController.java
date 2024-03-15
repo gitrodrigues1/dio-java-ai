@@ -7,6 +7,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import me.dio.diojavaai.model.Person;
 import me.dio.diojavaai.service.IPersonService;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/person")
+@Tag(name = "Person Controller", description = "Restful API for managing users")
 public class PersonController {
     
     private final IPersonService personService;
