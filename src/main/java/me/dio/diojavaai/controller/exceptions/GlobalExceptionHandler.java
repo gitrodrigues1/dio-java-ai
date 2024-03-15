@@ -16,11 +16,13 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleBusinessException(IllegalArgumentException businessException) {
+        logger.error(businessException.getMessage(), businessException);
         return new ResponseEntity<>(businessException.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNotFoundException(NoSuchElementException notFoundException) {
+        logger.error("Resource ID not found.", notFoundException);
         return new ResponseEntity<>("Resource ID not found.", HttpStatus.NOT_FOUND);
     }
 
