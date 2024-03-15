@@ -1,6 +1,7 @@
 package me.dio.diojavaai.service.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class PersonServiceImpl implements IPersonService{
 
     public PersonServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
-    }
+    }   
 
     @Override
     public List<Person> findAll() {
@@ -24,11 +25,14 @@ public class PersonServiceImpl implements IPersonService{
 
     @Override
     public Person findById(Long id) {
-        return personRepository.findById(id).get();
+        return personRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @Override
     public Person create(Person personToCreate) {
+        if(personRepository.existsByAccountNumber(personToCreate.getAccount().getNumber())) {
+            throw new IllegalArgumentException("This account number already exists");
+        }
         return personRepository.save(personToCreate);
     }
     
