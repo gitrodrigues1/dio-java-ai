@@ -1,0 +1,1 @@
+web: java -jar build/libs/dio-java-ai-0.0.1-SNAPSHOT.jar
