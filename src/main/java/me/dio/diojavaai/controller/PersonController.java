@@ -2,9 +2,12 @@ package me.dio.diojavaai.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import me.dio.diojavaai.model.Person;
 import me.dio.diojavaai.service.IPersonService;
+
+import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +29,19 @@ public class PersonController {
 
     @PostMapping
     public ResponseEntity<Person> createPerson(@RequestBody Person person) {
-        return ResponseEntity.ok(personService.create(person));
+        var createdPerson = personService.create(person);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(createdPerson)
+                .toUri();
+        return ResponseEntity.created(location).body(createdPerson);
     }
     
 
     @GetMapping("/{id}")
     public ResponseEntity<Person> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(personService.findById(id));
+        var foundPerson = personService.findById(id);
+        return ResponseEntity.ok(foundPerson);
     }
     
 
