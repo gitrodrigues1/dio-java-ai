@@ -19,20 +19,17 @@ public class PersonServiceImpl implements IPersonService{
 
     @Override
     public List<Person> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        return personRepository.findAll();
     }
 
     @Override
     public Person findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        return personRepository.findById(id).get();
     }
 
     @Override
     public Person create(Person personToCreate) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return personRepository.save(personToCreate);
     }
     
 }
