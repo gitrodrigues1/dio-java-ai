@@ -9,10 +9,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import me.dio.diojavaai.controller.exceptions.dto.PersonDto;
 import me.dio.diojavaai.model.Person;
 import me.dio.diojavaai.service.IPersonService;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,9 +53,23 @@ public class PersonController {
     
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get Person by Id", description = "Retrieve a specific user based on its ID")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "Operation successful"),
+        @ApiResponse(responseCode = "4040", description = "Person not found")
+    })
     public ResponseEntity<Person> findById(@PathVariable Long id) {
         var foundPerson = personService.findById(id);
         return ResponseEntity.ok(foundPerson);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PersonDto>> findAll() {
+        var person = personService.findAll();
+        var personDto = person.stream()
+                .map(PersonDto::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(personDto);
     }
     
 
