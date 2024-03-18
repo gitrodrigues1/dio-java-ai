@@ -11,4 +11,8 @@ public interface IPersonService {
     public Person findById(Long id);
 
     Person create(Person personToCreate);
+
+    Person update(Person personToUpdate, Long id);
+
+    void delete(Long id);
 }
