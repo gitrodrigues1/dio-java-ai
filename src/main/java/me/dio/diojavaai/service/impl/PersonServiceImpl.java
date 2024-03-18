@@ -35,5 +35,20 @@ public class PersonServiceImpl implements IPersonService{
         }
         return personRepository.save(personToCreate);
     }
+
+    @Override
+    public Person update(Person personToUpdate, Long id) {
+        if(!personRepository.existsById(id)) {
+            throw new IllegalArgumentException("Invalid account id!");
+        }
+        var person = personRepository.save(personToUpdate);
+        return person;
+        
+    }
+
+    @Override
+    public void delete(Long id) {
+        personRepository.deleteById(id);
+    }
     
 }
