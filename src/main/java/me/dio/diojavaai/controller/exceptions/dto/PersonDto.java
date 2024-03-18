@@ -10,8 +10,8 @@ import me.dio.diojavaai.model.Person;
 public record PersonDto(
     Long id, 
     String name,
-    AccountDto accountDto,
-    CardDto cardDto,
+    AccountDto account,
+    CardDto card,
     List<FeatureDto> features,
     List<NewsDto> news
 
@@ -26,5 +26,16 @@ public record PersonDto(
                 ofNullable(model.getFeatures()).orElse(emptyList()).stream().map(FeatureDto::new).collect(toList()),
                 ofNullable(model.getNews()).orElse(emptyList()).stream().map(NewsDto::new).collect(toList())
         );
+    }
+
+    public Person toModel() {
+        Person model = new Person();
+        model.setId(this.id);
+        model.setName(this.name);
+        model.setAccount(ofNullable(this.account).map(AccountDto::toModel).orElse(null));
+        model.setCard(ofNullable(this.card).map(CardDto::toModel).orElse(null));
+        model.setFeatures(ofNullable(this.features).orElse(emptyList()).stream().map(FeatureDto::toModel).collect(toList()));
+        model.setNews(ofNullable(this.news).orElse(emptyList()).stream().map(NewsDto::toModel).collect(toList()));
+        return model;
     }
 }
