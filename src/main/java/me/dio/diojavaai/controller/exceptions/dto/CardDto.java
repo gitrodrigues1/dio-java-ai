@@ -14,11 +14,11 @@ public record CardDto(
         this(model.getId(), model.getNumber(), model.getLimit());
     }
 
-    public Card toModel(CardDto dto) {
-        Card card = new Card();
-        card.setId(dto.id);
-        card.setNumber(dto.number);
-        card.setLimit(dto.limit);
-        return card;
+    public Card toModel() {
+        Card model = new Card();
+        model.setId(this.id);
+        model.setNumber(this.number);
+        model.setLimit(this.limit);
+        return model;
     }
 }
