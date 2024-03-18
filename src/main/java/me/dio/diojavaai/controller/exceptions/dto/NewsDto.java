@@ -12,11 +12,11 @@ public record NewsDto(
         this(model.getId(), model.getIcon(), model.getDescription());
     }
 
-    public News toModel(NewsDto dto) {
-        News news = new News();
-        news.setId(dto.id);
-        news.setIcon(dto.icon);
-        news.setDescription(dto.description);
-        return news;
+    public News toModel() {
+        News model = new News();
+        model.setId(this.id);
+        model.setIcon(this.icon);
+        model.setDescription(this.description);
+        return model;
     }
 }
