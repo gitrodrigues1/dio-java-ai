@@ -18,9 +18,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -56,7 +58,7 @@ public class PersonController {
     @Operation(summary = "Get Person by Id", description = "Retrieve a specific user based on its ID")
     @ApiResponses( value = {
         @ApiResponse(responseCode = "200", description = "Operation successful"),
-        @ApiResponse(responseCode = "4040", description = "Person not found")
+        @ApiResponse(responseCode = "404", description = "Person not found")
     })
     public ResponseEntity<Person> findById(@PathVariable Long id) {
         var foundPerson = personService.findById(id);
@@ -64,6 +66,11 @@ public class PersonController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all Person", description = "Retrieve all person")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "Operation successful"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
     public ResponseEntity<List<PersonDto>> findAll() {
         var person = personService.findAll();
         var personDto = person.stream()
@@ -72,6 +79,29 @@ public class PersonController {
         return ResponseEntity.ok(personDto);
     }
     
+    @PutMapping("/{id}")
+    @Operation(summary = "Update a Person", description = "Update the data of an existing person based on its ID")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "200", description = "User updated successfully"),
+        @ApiResponse(responseCode = "404", description = "Not found"),
+        @ApiResponse(responseCode = "422", description = "Invalid user data provided")
+    })
+    public ResponseEntity<PersonDto> updatePerson(@Valid @RequestBody PersonDto personDto, 
+            @PathVariable Long id) {
+        var person = personService.update(personDto.toModel(), id);
+        return ResponseEntity.ok(new PersonDto(person));
+    }
 
+    
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a Person", description = "Delete an existing person based on its ID")
+    @ApiResponses( value = {
+        @ApiResponse(responseCode = "204", description = "User deleted successfully"),
+        @ApiResponse(responseCode = "404", description = "Not found")
+    })
+    public ResponseEntity<Void> deletePerson(@PathVariable Long id) {
+        personService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
     
 }
